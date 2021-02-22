@@ -13,4 +13,4 @@ jobs:
           rm -rf /tmp/cookies.txt
           docker load < cw-20201.tar.gz
           docker run -d -it --name cw-2021 -v $(pwd):/usr/share/compiler-workout berezun/cw-2021
-          docker exec -it cw-2021 sh test.sh
+          docker exec -t cw-2021 sh test.sh
