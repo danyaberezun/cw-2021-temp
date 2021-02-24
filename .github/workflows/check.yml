@@ -24,7 +24,9 @@ jobs:
 # echo "::set-output name=res::$?"
         run: |
           echo ${{ steps.extract_branch.outputs.branch }}
+          branch=\"${{needs.job1.outputs.branch }}\"
           echo "::set-output name=id::\"danya\""
+          echo "${branch:0:2}"
 #         wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ" -O cw-20201.tar.gz
 #         rm -rf /tmp/cookies.txt
 #         docker load < cw-20201.tar.gz
@@ -55,6 +57,7 @@ jobs:
           RESULTS: ${{ steps.get_worksheet.outputs.results }}
         run: |
           cmd=$(echo "${RESULTS}" | jq ".results[0].result.rawData")
+          branch=\"${{needs.job1.outputs.branch }}\"
           gitid=\"${{needs.job1.outputs.output_id}}\"
           result=\"${{needs.job1.outputs.output_result}}\"
           j=0
