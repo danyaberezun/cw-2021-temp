@@ -21,17 +21,22 @@ jobs:
 #         with:
 #           ref: refs/pull/${{ github.event.pull_request.number }}/head
       - id: step1
-#           login=${{ github.event.pull_request.user.login }}
-#           echo "$login"
-#           echo "::set-output name=id::\"$login\""
 # echo "::set-output name=res::$?"
 # echo ${{ steps.extract_branch.outputs.branch }}
+#           echo ${{ github.base_ref }}
+#           echo ${{ github.head_ref }}
+#           head=${{ github.head_ref }}
+#           echo ${head:0:3}
         run: |
-          echo ${{ github.base_ref }}
-          echo ${{ github.head_ref }}
-          head=${{ github.head_ref }}
-          echo ${head:0:3}
-          echo "::set-output name=id::\"danya\""
+          login=${{ github.event.pull_request.user.login }}
+          echo "$login"
+          echo "::set-output name=id::\"$login\""
+          if [ "${{ github.base_ref }}" = "${{ github.head_ref }}" ]; then
+            echo "EQUAL"
+          else
+            echo "check base and head branch names"
+            exit 1
+          fi
 #         wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ" -O cw-20201.tar.gz
 #         rm -rf /tmp/cookies.txt
 #         docker load < cw-20201.tar.gz
@@ -63,6 +68,16 @@ jobs:
         run: |
           cmd=$(echo "${RESULTS}" | jq ".results[0].result.rawData")
           echo ${{ needs.job1.steps.extract_branch.outputs.branch }}
+          
+          branch=${{ github.base_ref }}
+          echo ${branch:1:2}
+          if [ "${branch:1:1}" = "0" ]; then
+            assignment=${branch:2:1}
+          else
+            assignment=${branch:1:2}
+          fi
+          echo $assignment
+
           branch=\"${{needs.job1.outputs.output_branch}}\"
           echo $branch
           echo ${branch:0:3}
