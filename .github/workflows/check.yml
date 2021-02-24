@@ -55,7 +55,7 @@ jobs:
           RESULTS: ${{ steps.get_worksheet.outputs.results }}
         run: |
           cmd=$(echo "${RESULTS}" | jq ".results[0].result.rawData")
-          branch=\"${{needs.job1.outputs.branch }}\"
+          branch=\"${{needs.job1.outputs.output_branch }}\"
           echo ${branch:0:3}
           gitid=\"${{needs.job1.outputs.output_id}}\"
           result=\"${{needs.job1.outputs.output_result}}\"
