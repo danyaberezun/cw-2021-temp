@@ -28,7 +28,7 @@ jobs:
 # echo ${{ steps.extract_branch.outputs.branch }}
         run: |
           echo ${{ github.base_ref }}
-          echo ${{ github.compare_ref }}
+          echo ${{ github.compare }}
           echo "::set-output name=id::\"danya\""
 #         wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1XpZ9YqArvAm_0a67G5K8VjUK7FdOCJLZ" -O cw-20201.tar.gz
 #         rm -rf /tmp/cookies.txt
